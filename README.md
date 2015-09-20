@@ -72,3 +72,11 @@ SSE for each fold and also the average SSE and its standard deviation across the
 I also  selected any fold, and plot the progress of the gradient descent algorithm for each dataset
 separately in two different plots. To this end plot the RMSE for each iteration.
 
+For all the datasets, I applied the correct way of normalizing data, that would be to normalize the training
+data and record the normalization parameters i.e., mean and standard deviation for z-score
+normalization and min and max feature values for feature re-scaling. This minimizes the
+chances of introducing any bias during the performance evaluation of the learning algorithm
+
+#  Least Squares Regression using Normal Equations
+
+Implementing Linear Regression using Normal equations for the above dataset.
