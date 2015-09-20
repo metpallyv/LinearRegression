@@ -1,0 +1,11 @@
+To run gradient descent code :
+
+1. gradient_descent.py -f concreteData.csv -e 0.0007 -t 0.0001
+2. gradient_descent.py -f yachtData.csv -e 0.004 -t 0.001
+3. gradient_descent.py -f housing.csv -e 0.0004 -t 0.005
+
+To run nomal equation linear regression
+
+1. normal_equation.py housing.csv
+2. normal_equation.py yachtData.csv
+3. normal_equation.py concreteData.csv
