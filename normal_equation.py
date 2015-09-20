@@ -13,11 +13,13 @@ from numpy.linalg import inv
 from numpy import *#genfromtxt
 feature = []
 
+#load the data set and randomly shuffle it
 def load_csv(file):
     X = genfromtxt(file, delimiter=",",dtype=str)
     #print(X)
     return (X)
 
+#normalize the data using z-score normalization
 def normalize(matrix,sd,me):
     with np.errstate(divide='ignore'):
         a = matrix
@@ -30,7 +32,6 @@ def normalize(matrix,sd,me):
                 sd_list.append(np.std(a[:,i]))
                 mean_list.append(np.mean(a[:,i]))
             return b,sd_list,mean_list
-
         else:
             res = np.empty(shape=[a.shape[0],0])
             for i in range(a.shape[1]):
@@ -42,6 +43,7 @@ def normalize(matrix,sd,me):
         res = np.nan_to_num(res)
     return res,sd,me
 
+#radomomly shuffle the array so that we can divide it into training and test
 def random_numpy_array(ar):
     np.random.shuffle(ar)
     #print(arr)
@@ -49,8 +51,9 @@ def random_numpy_array(ar):
     #print(arr)
     return arr
 
+#divide the dataset into 90% training and 10% test and return training features,
+#training class labels and test features and test class labels 
 def generate_set(X):
-
     X = X.astype(np.float)
     num_test = round(0.1*(X.shape[0]))
     start = 0
@@ -91,12 +94,14 @@ def generate_set(X):
         end = end+num_test
     return test_attri_list,test_class_names_list,training_attri_list,training_class_names_list
 
+#normal equation function
 def normal_equation(x,y):
     # calculate weight vector with the formula inverse of(x.T* x)*x.T*y
     z = inv(dot(x.transpose(), x))
     theta = dot(dot(z, x.transpose()), y)
     return theta
 
+# compute root mean squared error
 def compute_rmse_sse(x,y,theta):
     m = y.size
     pred = x.dot(theta)
