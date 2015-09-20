@@ -42,11 +42,14 @@ def load_csv(file):
     np.random.shuffle(X)
     return (X)
 
+#radomomly shuffle the array so that we can divide it into training and test
 def random_numpy_array(ar):
     np.random.shuffle(ar)
     arr = ar
     return arr
 
+#divide the dataset into 90% training and 10% test and return training features,
+#training class labels and test features and test class labels 
 def generate_set(X):
     X = X.astype(np.float)
     num_test = round(0.1*(X.shape[0]))
@@ -67,6 +70,7 @@ def generate_set(X):
         X_test = X_test[:,:-1]
         X_training = np.matrix( X_training )
         X_test = np.matrix(X_test)
+        #normalize the data
         X_training_normalized,sd,mean = normalize(X_training,0,0)
         X_training_normalized = np.nan_to_num(X_training_normalized)
         X_test_normalized,sd,mean = normalize(X_test,sd,mean)
@@ -88,6 +92,7 @@ def generate_set(X):
         end = end+num_test
     return test_attri_list,test_class_names_list,training_attri_list,training_class_names_list
 
+#gradient descent algo step
 def gradient_descent(X,Y,lRate,tolerance,plotGraph):
     #MaxIterCount is 1000, don't iterate more than 1000 times
     max_iter = 1000
@@ -119,6 +124,7 @@ def gradient_descent(X,Y,lRate,tolerance,plotGraph):
         plt.savefig(fileName)
     return thetha
 
+#cal gradient value 
 def cal_gradient(X,Y,thetha,pos):
     sum = 0.0
     temp_fea = np.dot(X,thetha)
@@ -126,6 +132,7 @@ def cal_gradient(X,Y,thetha,pos):
             sum = sum + ((temp_fea[i] - Y[i])*X[i][pos])
     return sum
 
+#compute the rmse score
 def compute_rmse(test_X,test_Y,thetha):
     m = test_Y.size
     predict = test_X.dot(thetha)
@@ -134,7 +141,7 @@ def compute_rmse(test_X,test_Y,thetha):
     rmse = math.sqrt(sse)
     return rmse,sse
 
-
+#main entrance of the code
 def main(argv):
     try:
         opts, args = getopt.getopt(argv,"f:t:e:")
@@ -151,9 +158,10 @@ def main(argv):
             tolerance = float(value)
         if opt == "-e":
             eta = float(value)
+    #load the data set        
     num_arr = load_csv(newfile)
+    #generate training features, training class labels, test features and test labels
     test_x,test_y,training_x,training_y = generate_set(num_arr)
-
     for i in range(len(training_x)):
         plotGraph = False
         plotGraph = (i == len(training_x) - 3)
